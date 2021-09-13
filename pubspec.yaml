@@ -1,0 +1,52 @@
+name: instrubuy
+description: Final Year Project
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.0 # CupertinoIcons package for iOs style icons.
+  carousel_pro: ^1.0.0  # Image slider
+  google_fonts: ^1.1.0  # Any fonts from Google
+  flutter_svg: ^0.19.3  # It helps us to use SVG(Scalar Vector Graphics) on our app.
+  provider: ^4.3.1 # It helps in state management
+  http: ^0.12.0+4 # to connect with http web servers
+  fluttertoast: ^4.0.1 # to show toast message in login/signUp page
+  scoped_model: ^1.1.0 # to easily pass a data model from parent widget to its children
+  kf_drawer: ^1.1.2 # Side bar drawer
+  #image_picker:  # for image
+  image_picker: ^0.6.7+4
+
+  flutter_khalti: ^1.0.0  # for payment
+  intl: ^0.16.1  # for date, time
+  shared_preferences: ^2.0.6  # for keeping user logged in
+  get: ^4.1.4  # to navigate user to different pages.
+  cached_network_image:
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+# The following section is specific to Flutter.
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  assets:
+    - assets/icons/
+    - assets/images/
+
+analyzer:
+  strong-mode: true
+  language:
+    enableSuperMixins: true
