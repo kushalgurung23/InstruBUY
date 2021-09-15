@@ -102,35 +102,36 @@ class _AdminPanelState extends State<AdminPanel> {
                         vertical: SizeConfig.defaultSize,
                         horizontal: SizeConfig.defaultSize),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         SizedBox(
                           height: SizeConfig.defaultSize * 2,
                         ),
-                        Text(
-                          "Total Customers",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.white),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize),
+                          child: Text(
+                            "Total Customers",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, color: Colors.white),
+                          ),
                         ),
-                        SizedBox(
-                          height: SizeConfig.defaultSize,
-                        ),
-                        FutureBuilder(
-                          future: getCustomerCount(),
-                          builder: (context, snapshot) {
-                            var value = (snapshot.connectionState ==
-                                    ConnectionState.done
-                                ? '${customerCount}'
-                                : 'Loading..');
-                            return Text(
-                              value,
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            );
-                          },
-                        ),
-                        SizedBox(
-                          height: SizeConfig.defaultSize * 2,
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(0, SizeConfig.defaultSize, 0, SizeConfig.defaultSize * 2),
+                          child: FutureBuilder(
+                            future: getCustomerCount(),
+                            builder: (context, snapshot) {
+                              var value = (snapshot.connectionState ==
+                                      ConnectionState.done
+                                  ? '${customerCount}'
+                                  : 'Loading..');
+                              return Text(
+                                value,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       ],
                     ),
@@ -153,33 +154,33 @@ class _AdminPanelState extends State<AdminPanel> {
                         SizedBox(
                           height: SizeConfig.defaultSize * 2,
                         ),
-                        Text(
-                          "Total Products",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize),
+                          child: Text(
+                            "Total Products",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
-                        SizedBox(
-                          height: SizeConfig.defaultSize,
-                        ),
-                        FutureBuilder(
-                          future: getProductCount(),
-                          builder: (context, snapshot) {
-                            var value = (snapshot.connectionState ==
-                                    ConnectionState.done
-                                ? '${productCount}'
-                                : 'Loading..');
-                            return Text(
-                              value,
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            );
-                          },
-                        ),
-                        SizedBox(
-                          height: SizeConfig.defaultSize * 2,
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(0, SizeConfig.defaultSize, 0, SizeConfig.defaultSize * 2),
+                          child: FutureBuilder(
+                            future: getProductCount(),
+                            builder: (context, snapshot) {
+                              var value = (snapshot.connectionState ==
+                                      ConnectionState.done
+                                  ? '${productCount}'
+                                  : 'Loading..');
+                              return Text(
+                                value,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       ],
                     ),
@@ -209,31 +210,36 @@ class _AdminPanelState extends State<AdminPanel> {
                         SizedBox(
                           height: SizeConfig.defaultSize * 2,
                         ),
-                        Text(
-                          "Highest Order Amount",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.white),
-                        ),
-                        SizedBox(
-                          height: SizeConfig.defaultSize,
-                        ),
-                        FutureBuilder(
-                          future: getHighestOrderAmount(),
-                          builder: (context, snapshot) {
-                            var value = (snapshot.connectionState ==
-                                    ConnectionState.done
-                                ? 'Rs. ${highestOrderAmount}'
-                                : 'Loading..');
-                            return Text(
-                              value,
-                              style: TextStyle(
-                                color: Colors.white,
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Highest Order Amount",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, color: Colors.white),
                               ),
-                            );
-                          },
+                            ],
+                          ),
                         ),
-                        SizedBox(
-                          height: SizeConfig.defaultSize * 2,
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(0, SizeConfig.defaultSize, 0, SizeConfig.defaultSize * 2),
+                          child: FutureBuilder(
+                            future: getHighestOrderAmount(),
+                            builder: (context, snapshot) {
+                              var value = (snapshot.connectionState ==
+                                      ConnectionState.done
+                                  ? 'Rs. ${highestOrderAmount}'
+                                  : 'Loading..');
+                              return Text(
+                                value,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       ],
                     ),
@@ -256,31 +262,31 @@ class _AdminPanelState extends State<AdminPanel> {
                         SizedBox(
                           height: SizeConfig.defaultSize * 2,
                         ),
-                        Text(
-                          "Total Product Orders",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.white),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize),
+                          child: Text(
+                            "Total Product Orders",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, color: Colors.white),
+                          ),
                         ),
-                        SizedBox(
-                          height: SizeConfig.defaultSize,
-                        ),
-                        FutureBuilder(
-                          future: getTotalProductOrder(),
-                          builder: (context, snapshot) {
-                            var value = (snapshot.connectionState ==
-                                    ConnectionState.done
-                                ? '${totalProductOrder}'
-                                : 'Loading..');
-                            return Text(
-                              value,
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            );
-                          },
-                        ),
-                        SizedBox(
-                          height: SizeConfig.defaultSize * 2,
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(0, SizeConfig.defaultSize, 0, SizeConfig.defaultSize * 2),
+                          child: FutureBuilder(
+                            future: getTotalProductOrder(),
+                            builder: (context, snapshot) {
+                              var value = (snapshot.connectionState ==
+                                      ConnectionState.done
+                                  ? '${totalProductOrder}'
+                                  : 'Loading..');
+                              return Text(
+                                value,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       ],
                     ),

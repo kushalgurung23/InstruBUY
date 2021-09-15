@@ -139,65 +139,72 @@ class _DetailScreenBodyState extends State<DetailScreenBody> {
       children: [
         DetailScreenImages(product: widget.product),
         DetailScreenBottomContainer(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ProductDescription(
-                  product: widget.product,
-                ),
-                SizedBox(
-                  height: defaultSize * 1.5,
-                ),
-                CartNumber(),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      vertical: defaultSize * 2, horizontal: defaultSize * 2),
-                  child: Row(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(right: defaultSize),
-                        height: defaultSize * 5.0,
-                        width: defaultSize * 6.0,
-                        decoration: BoxDecoration(
-                            borderRadius:
-                                BorderRadius.circular(defaultSize * 1.5),
-                            border: Border.all(
-                              color: kPrimaryLightColor,
-                            )),
-                        child: IconButton(
-                          icon: Icon(
-                            Icons.add_shopping_cart,
-                            color: kPrimaryLightColor,
-                          ),
-                          onPressed: () async {
-                            //await decreaseProductQuantity(total_item: CartQuantity.cartQuantity);
-                            await addToCart(
-                              customer_id: yourCustomer_id,
-                              total_item: CartQuantity.cartQuantity,
-                            );
-                          },
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Container(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        ProductDescription(
+                          product: widget.product,
                         ),
-                      ),
-                      DefaultFlatButton(
-                        buttonName: "Buy Now",
-                        buttonColor: Colors.deepOrangeAccent,
-                        onPress: () async {
-                          // It will set the value of quantity = 1 in detail screen
-                          await checkOut(
-                            customer_id: yourCustomer_id,
-                            total_item: CartQuantity.cartQuantity,
-                            // It will set the value of quantity = 1 in detail screen
-                          );
-                          CartQuantity.cartQuantity = 1;
-                        },
-                      ),
-                    ],
+                        SizedBox(
+                          height: defaultSize * 1.5,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ],
-            ),
+              ),
+              CartNumber(),
+              Padding(
+                padding: EdgeInsets.fromLTRB(defaultSize * 2, defaultSize, defaultSize * 2, defaultSize * 2),
+                child: Row(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(right: defaultSize),
+                      height: defaultSize * 5.0,
+                      width: defaultSize * 6.0,
+                      decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadius.circular(defaultSize * 1.5),
+                          border: Border.all(
+                            color: kPrimaryLightColor,
+                          )),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.add_shopping_cart,
+                          color: kPrimaryLightColor,
+                        ),
+                        onPressed: () async {
+                          //await decreaseProductQuantity(total_item: CartQuantity.cartQuantity);
+                          await addToCart(
+                            customer_id: yourCustomer_id,
+                            total_item: CartQuantity.cartQuantity,
+                          );
+                        },
+                      ),
+                    ),
+                    DefaultFlatButton(
+                      buttonName: "Buy Now",
+                      buttonColor: Colors.deepOrangeAccent,
+                      onPress: () async {
+                        // It will set the value of quantity = 1 in detail screen
+                        await checkOut(
+                          customer_id: yourCustomer_id,
+                          total_item: CartQuantity.cartQuantity,
+                          // It will set the value of quantity = 1 in detail screen
+                        );
+                        CartQuantity.cartQuantity = 1;
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
       ],
