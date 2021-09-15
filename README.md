@@ -1,6 +1,6 @@
-# instrubuy
+# InstruBUY
 
-Final Year Project
+InstruBUY is an ecommerce mobile application built with Flutter, PHP and MySQL during my final year college project.
 
 ## Getting Started
 
