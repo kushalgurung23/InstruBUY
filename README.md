@@ -1,6 +1,6 @@
 # InstruBUY
 
-InstruBUY is an ecommerce mobile application built with Flutter, PHP, and MySQL during my final year college project.
+InstruBUY is an ecommerce mobile application built with Flutter framework, PHP language and MySQL RDBMS during my final year college project.
 
 ## Getting Started
 
