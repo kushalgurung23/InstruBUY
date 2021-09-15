@@ -145,7 +145,7 @@ class _PaymentState extends State<Payment> {
 
     // Test public key should be used instead of live key for testing purpose.
     FlutterKhalti _flutterKhalti = FlutterKhalti.configure(
-        publicKey: "Enter your public key.",
+        publicKey: "Enter your public key..",
         urlSchemeIOS: "KhaltiPayFlutterExampleSchema");
 
     KhaltiProduct product = KhaltiProduct(
