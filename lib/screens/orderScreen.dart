@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
@@ -50,7 +52,9 @@ class _CustomerOrderDetailsState extends State<CustomerOrderDetails> {
           msg: "Error, please try again later",
           toastLength: Toast.LENGTH_SHORT);
     }
-    setState(() {});
+    setState(() {
+      Navigator.pop(context);
+    });
   }
 
   @override
@@ -174,8 +178,29 @@ class _CustomerOrderDetailsState extends State<CustomerOrderDetails> {
                                 ),
                                 onTap: () {
                                   setState(() {
-                                    deleteOrderHistory(
-                                        order_id: list[index]['order_id']);
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          content: Text(
+                                              "Are you sure you want to delete this order history?"),
+                                          actions: [
+                                            TextButton(
+                                                child: Text("No", style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w600),),
+                                                onPressed: () =>
+                                                    {Navigator.pop(context)}),
+                                            TextButton(
+                                              child: Text("Yes", style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w600),),
+                                              onPressed: () =>
+                                                  deleteOrderHistory(
+                                                      order_id: list[index]
+                                                          ['order_id']),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                      barrierDismissible: false,
+                                    );
                                   });
                                 },
                               ),

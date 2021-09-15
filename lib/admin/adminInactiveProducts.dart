@@ -43,6 +43,40 @@ class _AdminInactiveProductsState extends State<AdminInactiveProducts> {
     return json.decode(response.body);
   }
 
+  void deleteInactiveProducts({String product_id}) async {
+    var url =
+        "https://instrubuy.000webhostapp.com/instrubuy_adminPanel/deleteProducts.php";
+    var res = await http.post(url, body: {
+      'product_id': product_id,
+    });
+    if (jsonDecode(res.body) ==
+        "Product is in cart table") {
+      Fluttertoast.showToast(
+          msg:
+          "Sorry, this product cannot be deleted, because it is in the cart of customer.",
+          toastLength: Toast.LENGTH_LONG);
+    } else if (jsonDecode(res.body) ==
+        "Product is in order table") {
+      Fluttertoast.showToast(
+          msg:
+          "Sorry, this product cannot be deleted, because it's details are stored in order details of customer.",
+          toastLength: Toast.LENGTH_LONG);
+    } else if (jsonDecode(res.body) ==
+        "true") {
+      Fluttertoast.showToast(
+          msg: "Product has been deleted permanently.",
+          toastLength: Toast.LENGTH_SHORT);
+    } else {
+      Fluttertoast.showToast(
+          msg:
+          "Error, please try again later",
+          toastLength: Toast.LENGTH_SHORT);
+    }
+    setState(() {
+      Navigator.pop(context);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -162,35 +196,27 @@ class _AdminInactiveProductsState extends State<AdminInactiveProducts> {
                                       color: Colors.white,
                                     ),
                                     onTap: () async {
-                                      var url =
-                                          "https://instrubuy.000webhostapp.com/instrubuy_adminPanel/deleteProducts.php";
-                                      var res = await http.post(url, body: {
-                                        'product_id': list[index]['product_id'],
-                                      });
-                                      if (jsonDecode(res.body) ==
-                                          "Product is in cart table") {
-                                        Fluttertoast.showToast(
-                                            msg:
-                                                "Sorry, this product cannot be deleted, because it is in the cart of customer.",
-                                            toastLength: Toast.LENGTH_LONG);
-                                      } else if (jsonDecode(res.body) ==
-                                          "Product is in order table") {
-                                        Fluttertoast.showToast(
-                                            msg:
-                                                "Sorry, this product cannot be deleted, because it's details are stored in order details of customer.",
-                                            toastLength: Toast.LENGTH_LONG);
-                                      } else if (jsonDecode(res.body) ==
-                                          "true") {
-                                        Fluttertoast.showToast(
-                                            msg: "Product has been deleted.",
-                                            toastLength: Toast.LENGTH_SHORT);
-                                      } else {
-                                        Fluttertoast.showToast(
-                                            msg:
-                                                "Error, please try again later",
-                                            toastLength: Toast.LENGTH_SHORT);
-                                      }
-                                      setState(() {});
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            content: Text(
+                                                "Are you sure you want to delete this product permanently?"),
+                                            actions: [
+                                              TextButton(
+                                                  child: Text("No", style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w600),),
+                                                  onPressed: () =>
+                                                  {Navigator.pop(context)}),
+                                              TextButton(
+                                                child: Text("Yes", style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w600),),
+                                                onPressed: () =>
+                                                    deleteInactiveProducts(product_id: list[index]['product_id']),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                        barrierDismissible: false,
+                                      );
                                     },
                                   ),
                                 ),
