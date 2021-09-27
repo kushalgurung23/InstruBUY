@@ -1,8 +1,9 @@
 // InstruBUY E-Commerce Application
-// September 12, 2021. 10:32 PM
+// September 27, 2021. 10:34 PM
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:instrubuy/Drawer/Profile.dart';
 import 'package:instrubuy/admin/addProduct.dart';
 import 'package:instrubuy/admin/adminCustomerDetails.dart';
 import 'package:instrubuy/admin/adminAllProducts.dart';
@@ -78,6 +79,7 @@ class _MyAppState extends State<MyApp> {
           AdminOrderDetails.id: (context) => AdminOrderDetails(),
           AdminCustomerDetails.id: (context) => AdminCustomerDetails(),
           CustomerOrderDetails.id: (context) => CustomerOrderDetails(),
+          Profile.id: (context) => Profile(),
         },
       ),
     );

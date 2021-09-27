@@ -28,7 +28,7 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
     if (jsonDecode(res.body) ==
         "true") {
       Fluttertoast.showToast(
-          msg: "Order detail has been deleted.",
+          msg: "Order detail has been deleted temporarily.",
           toastLength: Toast.LENGTH_SHORT);
     } else {
       Fluttertoast.showToast(
@@ -36,7 +36,9 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
           "Error, please try again later",
           toastLength: Toast.LENGTH_SHORT);
     }
-    setState(() {});
+    setState(() {
+      Navigator.pop(context);
+    });
   }
 
   Future fetchOrderData() async {
@@ -117,7 +119,7 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
 
                                   return "Payment status: Unpaid";
                                 })(), style: TextStyle(color: Colors.white)),
-                                Text("Order status: " + list[index]['status'], style: TextStyle(color: Colors.white)),
+                                Text("Product delivery: " + list[index]['status'], style: TextStyle(color: Colors.white)),
                               ],
                             ),
                             trailing: GestureDetector(
@@ -127,7 +129,28 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
                               ),
                               onTap: () {
                                 setState(() {
-                                  deleteOrder(order_id: list[index]['order_id']);
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        content: Text(
+                                            "Are you sure you want to delete this order detail temporarily?"),
+                                        actions: [
+                                          TextButton(
+                                              child: Text("No", style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w600),),
+                                              onPressed: () =>
+                                              {Navigator.pop(context)}),
+                                          TextButton(
+                                            child: Text("Yes", style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w600),),
+                                            onPressed: () =>
+                                                deleteOrder(order_id: list[index]['order_id']),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                    barrierDismissible: false,
+                                  );
+
                                 });
 
                               },

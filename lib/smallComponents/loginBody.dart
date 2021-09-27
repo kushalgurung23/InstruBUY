@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instrubuy/admin/adminLogin.dart';
-import 'package:instrubuy/buttons/roundedIconButton.dart';
 import 'package:instrubuy/buttons/roundedLoginSignUpButton.dart';
 import 'package:instrubuy/screens/home_screen.dart';
 import 'package:instrubuy/screens/signUp_screen.dart';
@@ -92,10 +91,10 @@ class _LoginBodyState extends State<LoginBody> {
             (jsonDecode(res.body)["result"][0]["email_address"]).toString());
         preferences.setString('password',
             (jsonDecode(res.body)["result"][0]["password"]).toString());
-        preferences.setString('image',
-            (jsonDecode(res.body)["result"][0]["image"]).toString());
-        preferences.setString('status',
-            (jsonDecode(res.body)["result"][0]["status"]).toString());
+        preferences.setString(
+            'image', (jsonDecode(res.body)["result"][0]["image"]).toString());
+        preferences.setString(
+            'status', (jsonDecode(res.body)["result"][0]["status"]).toString());
 
         // Setting value to customer_id static variable.
         widget.customer_id =
@@ -105,7 +104,7 @@ class _LoginBodyState extends State<LoginBody> {
             msg:
                 "Welcome ${(jsonDecode(res.body)["result"][0]["full_name"]).toString()}",
             toastLength: Toast.LENGTH_SHORT);
-        Navigator.pushNamed(context, HomeScreen.id);
+        Navigator.pushReplacementNamed(context, HomeScreen.id);
       }
     }
   }
@@ -182,7 +181,7 @@ class _LoginBodyState extends State<LoginBody> {
             HaveAnAccount(
               login: true,
               onPress: () {
-                Navigator.pushNamed(context, SignUpScreen.id);
+                Navigator.pushReplacementNamed(context, SignUpScreen.id);
               },
             ),
             SizedBox(
@@ -226,7 +225,7 @@ class _LoginBodyState extends State<LoginBody> {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, AdminLogin.id);
+                Navigator.pushReplacementNamed(context, AdminLogin.id);
               },
               child: Text(
                 "Admin",

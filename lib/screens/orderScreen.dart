@@ -166,7 +166,7 @@ class _CustomerOrderDetailsState extends State<CustomerOrderDetails> {
                                     style: TextStyle(color: Colors.white),
                                   ),
                                   Text(
-                                    "Order status: " + list[index]['status'],
+                                    "Product delivery: " + list[index]['status'],
                                     style: TextStyle(color: Colors.white),
                                   ),
                                 ],

@@ -514,7 +514,7 @@ class _AdminPanelState extends State<AdminPanel> {
                     preferences.remove('admin_id');
                     preferences.remove('adminPassword');
                   });
-                  Navigator.pushNamed(context, AdminLogin.id);
+                  Navigator.pushNamedAndRemoveUntil(context, AdminLogin.id, (route) => false);
                   Fluttertoast.showToast(
                       msg: "Logged out successfully",
                       toastLength: Toast.LENGTH_SHORT);

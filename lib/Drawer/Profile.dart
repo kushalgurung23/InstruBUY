@@ -2,6 +2,9 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:instrubuy/Drawer/Home.dart';
+import 'package:instrubuy/Drawer/Sidebar.dart';
+import 'package:instrubuy/screens/cart_screen.dart';
 import 'package:instrubuy/screens/home_screen.dart';
 import 'package:instrubuy/screens/profileUpdate.dart';
 import 'package:instrubuy/smallComponents/ProfileInputTextField.dart';
@@ -14,11 +17,9 @@ class Profile extends StatefulWidget {
 
   final String fullName, address, emailAddress, image;
 
-  Profile(
-      {this.fullName,
-      this.address,
-      this.emailAddress,
-      this.image});
+  Profile({this.fullName, this.address, this.emailAddress, this.image});
+
+  String updatedImage;
 
   @override
   _ProfileState createState() => _ProfileState();
@@ -46,6 +47,23 @@ class _ProfileState extends State<Profile> {
     super.initState();
   }
 
+  void noImageProfileUpdate({String updatedFullName, String updatedAddress, String updatedEmailAddress}) {
+    setState(() {
+      fullNameText.text = updatedFullName;
+      addressText.text = updatedAddress;
+      emailAddressText.text = updatedEmailAddress;
+    });
+  }
+
+  void withImageProfileUpdate({String updatedFullName, String updatedAddress, String updatedEmailAddress, String updatedImage}) {
+    setState(() {
+      widget.updatedImage = updatedImage;
+      fullNameText.text = updatedFullName;
+      addressText.text = updatedAddress;
+      emailAddressText.text = updatedEmailAddress;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,7 +85,7 @@ class _ProfileState extends State<Profile> {
             color: kPrimaryColor,
           ),
           onPressed: () {
-            Navigator.pushNamed(context, HomeScreen.id);
+            Navigator.of(context).pop();
           },
         ),
       ),
@@ -102,13 +120,14 @@ class _ProfileState extends State<Profile> {
                           image: DecorationImage(
                             fit: BoxFit.cover,
                             image: NetworkImage(
-                                "https://instrubuy.000webhostapp.com/instrubuy_images/${widget.image}"),
+                                "https://instrubuy.000webhostapp.com/instrubuy_images/${widget.updatedImage ?? widget.image}"),
                           ),
                         ),
                       ),
                     ],
                   ),
                 ),
+//
                 SizedBox(
                   height: SizeConfig.defaultSize * 2.5,
                 ),
@@ -117,21 +136,30 @@ class _ProfileState extends State<Profile> {
                       horizontal: SizeConfig.defaultSize * 11),
                   child: OutlinedButton(
                     style: OutlinedButton.styleFrom(
-                        elevation: 1.0,
-                        backgroundColor: kPrimaryColor,
-                        padding: EdgeInsets.zero,
-                        shape: StadiumBorder(),
+                      elevation: 1.0,
+                      backgroundColor: kPrimaryColor,
+                      padding: EdgeInsets.zero,
+                      shape: StadiumBorder(),
                     ),
-                    onPressed: () {
-                      Navigator.push(
+                    onPressed: () async {
+                         Map mapData = await Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => ProfileUpdate(
-                                fullName: widget.fullName,
-                                address: widget.address,
-                                emailAddress: widget.emailAddress,
-                                image: widget.image,
-                              )));
+                                    fullName: widget.fullName,
+                                    address: widget.address,
+                                    emailAddress: widget.emailAddress,
+                                    image: widget.image,
+                                  )));
+
+                         if(mapData["image"] == null) {
+                           noImageProfileUpdate(updatedFullName: mapData["fullName"], updatedAddress: mapData["address"], updatedEmailAddress: mapData["emailAddress"]);
+                           print("noimageupdate");
+                         }
+                         else {
+                           withImageProfileUpdate(updatedFullName: mapData["fullName"], updatedAddress: mapData["address"], updatedEmailAddress: mapData["emailAddress"], updatedImage: mapData["image"]);
+                           print("withimageupdate");
+                         }
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

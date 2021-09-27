@@ -23,6 +23,36 @@ class _AdminInactiveCustomerDetailsState
     return json.decode(response.body);
   }
 
+  void deleteInactiveCustomer({String customer_id}) async {
+    var url =
+        "https://instrubuy.000webhostapp.com/instrubuy_adminPanel/deleteCustomer.php";
+    var res = await http.post(url, body: {
+      'customer_id': customer_id,
+    });
+    if (jsonDecode(res.body) == "Customer is in cart table") {
+      Fluttertoast.showToast(
+          msg:
+              "Sorry, this customer account cannot be deleted, because this customer has products added to their cart.",
+          toastLength: Toast.LENGTH_LONG);
+    } else if (jsonDecode(res.body) == "Customer is in order table") {
+      Fluttertoast.showToast(
+          msg:
+              "Sorry, this customer account cannot be deleted, because it's details are stored in order details.",
+          toastLength: Toast.LENGTH_LONG);
+    } else if (jsonDecode(res.body) == "true") {
+      Fluttertoast.showToast(
+          msg: "Customer's account has been deleted permanently.",
+          toastLength: Toast.LENGTH_SHORT);
+    } else {
+      Fluttertoast.showToast(
+          msg: "Error, please try again later",
+          toastLength: Toast.LENGTH_SHORT);
+    }
+    setState(() {
+      Navigator.pop(context);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -46,7 +76,10 @@ class _AdminInactiveCustomerDetailsState
               child: RoundedIconButton(
                 iconData: Icons.arrow_back_ios,
                 press: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => CustomerStatus()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CustomerStatus()));
                 },
               ),
             ),
@@ -70,7 +103,8 @@ class _AdminInactiveCustomerDetailsState
                           padding: EdgeInsets.symmetric(
                               vertical: SizeConfig.defaultSize),
                           decoration: BoxDecoration(
-                              gradient: LinearGradient(colors: [Colors.deepPurple, Colors.blue]),
+                              gradient: LinearGradient(
+                                  colors: [Colors.deepPurple, Colors.blue]),
                               borderRadius: BorderRadius.circular(10)),
                           child: ListTile(
                             title: Column(
@@ -118,9 +152,12 @@ class _AdminInactiveCustomerDetailsState
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 UpdateCustomerStatus(
-                                                  customer_id: list[index]['customer_id'],
-                                                  customerStatus: list[index]['status'],
-                                                  email_address: list[index]['email_address'],
+                                                  customer_id: list[index]
+                                                      ['customer_id'],
+                                                  customerStatus: list[index]
+                                                      ['status'],
+                                                  email_address: list[index]
+                                                      ['email_address'],
                                                 )));
                                   },
                                 ),
@@ -131,38 +168,44 @@ class _AdminInactiveCustomerDetailsState
                                       Icons.delete,
                                       color: Colors.white,
                                     ),
-                                    onTap: () async {
-                                      var url =
-                                          "https://instrubuy.000webhostapp.com/instrubuy_adminPanel/deleteCustomer.php";
-                                      var res = await http.post(url, body: {
-                                        'customer_id': list[index]
-                                            ['customer_id'],
-                                      });
-                                      if (jsonDecode(res.body) ==
-                                          "Customer is in cart table") {
-                                        Fluttertoast.showToast(
-                                            msg:
-                                                "Sorry, this customer account cannot be deleted, because this customer has products added to their cart.",
-                                            toastLength: Toast.LENGTH_LONG);
-                                      } else if (jsonDecode(res.body) ==
-                                          "Customer is in order table") {
-                                        Fluttertoast.showToast(
-                                            msg:
-                                                "Sorry, this customer account cannot be deleted, because it's details are stored in order details.",
-                                            toastLength: Toast.LENGTH_LONG);
-                                      } else if (jsonDecode(res.body) ==
-                                          "true") {
-                                        Fluttertoast.showToast(
-                                            msg:
-                                                "Customer's account has been deleted.",
-                                            toastLength: Toast.LENGTH_SHORT);
-                                      } else {
-                                        Fluttertoast.showToast(
-                                            msg:
-                                                "Error, please try again later",
-                                            toastLength: Toast.LENGTH_SHORT);
-                                      }
-                                      setState(() {});
+                                    onTap: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            content: Text(
+                                                "Are you sure you want to delete this customer permanently?"),
+                                            actions: [
+                                              TextButton(
+                                                  child: Text(
+                                                    "No",
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w600),
+                                                  ),
+                                                  onPressed: () =>
+                                                      {Navigator.pop(context)}),
+                                              TextButton(
+                                                child: Text(
+                                                  "Yes",
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                ),
+                                                onPressed: () =>
+                                                    deleteInactiveCustomer(
+                                                        customer_id: list[index]
+                                                            ['customer_id']),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                        barrierDismissible: false,
+                                      );
                                     },
                                   ),
                                 ),

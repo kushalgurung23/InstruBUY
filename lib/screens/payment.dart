@@ -75,13 +75,32 @@ class _PaymentState extends State<Payment> {
     var response = await request.send();
 
     if (response.statusCode == 200) {
-      Fluttertoast.showToast(
-          msg: "Your order has been received.",
-          toastLength: Toast.LENGTH_SHORT);
-      Navigator.pushNamed(context, HomeScreen.id);
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Order Received"),
+            content: Text(
+                "Delivery is on the way. Thank you for purchasing with InstruBUY."),
+            actions: [
+              TextButton(
+                  child: Text(
+                    "Ok",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600),
+                  ),
+                  onPressed: () =>
+                      {Navigator.pushNamedAndRemoveUntil(context, HomeScreen.id, (route) => false)}),
+            ],
+          );
+        },
+        barrierDismissible: false,
+      );
     } else {
       Fluttertoast.showToast(
-          msg: "Please try again after some time.",
+          msg: "Sorry, please try again later.",
           toastLength: Toast.LENGTH_SHORT);
     }
   }
@@ -123,7 +142,8 @@ class _PaymentState extends State<Payment> {
                       Fluttertoast.showToast(
                           msg: "Payment amount must be at least Rs. 1.",
                           toastLength: Toast.LENGTH_SHORT);
-                    } else if (double.parse(amountText.text.toString()) > 1000) {
+                    } else if (double.parse(amountText.text.toString()) >
+                        1000) {
                       Fluttertoast.showToast(
                           msg: "Payment amount must be less than Rs. 1000.",
                           toastLength: Toast.LENGTH_SHORT);

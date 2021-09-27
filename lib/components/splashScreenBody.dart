@@ -72,7 +72,7 @@ class _SplashScreenBodyState extends State<SplashScreenBody> {
                     ExtendedFlatButton(
                       buttonName: "Get Started",
                       onPress: () {
-                        Navigator.pushNamed(context, LoginScreen.id);
+                        Navigator.pushReplacementNamed(context, LoginScreen.id);
                       },
                     ),
                     Spacer(),

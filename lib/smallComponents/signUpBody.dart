@@ -61,7 +61,7 @@ class _SignUpBodyState extends State<SignUpBody> {
         if (jsonDecode(res.body) == "true")
         {
           Fluttertoast.showToast(msg: "Account has been created successfully.", toastLength: Toast.LENGTH_SHORT);
-          Navigator.pushNamed(context, LoginScreen.id);
+          Navigator.pushReplacementNamed(context, LoginScreen.id);
         }
         else
         {
@@ -166,7 +166,7 @@ class _SignUpBodyState extends State<SignUpBody> {
             child: HaveAnAccount(
               login: false,
               onPress: () {
-                Navigator.pushNamed(context, LoginScreen.id);
+                Navigator.pushReplacementNamed(context, LoginScreen.id);
               },
             ),
           ),

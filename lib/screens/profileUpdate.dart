@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:instrubuy/Drawer/Profile.dart';
+import 'package:instrubuy/screens/home_screen.dart';
 import 'package:instrubuy/smallComponents/ProfileInputTextField.dart';
 import 'package:instrubuy/smallComponents/constants.dart';
 import 'package:http/http.dart' as http;
@@ -46,6 +47,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
 
   bool showPassword = true;
   File _image;
+
   // For setting new image name in shared preference.
   String newUserImage;
   final picker = ImagePicker();
@@ -84,6 +86,9 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
   }
 
   void imageIncluded() async {
+
+    Map withImageMapData;
+
     final uri = Uri.parse(
         "https://instrubuy.000webhostapp.com/instrubuy_profile/updateProfile.php");
     var request = http.MultipartRequest('POST', uri);
@@ -108,15 +113,10 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
       preferences.setString('email_address', emailAddressText.text);
       preferences.setString('image', newUserImage);
 
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => Profile(
-                    fullName: fullNameText.text,
-                    address: addressText.text,
-                    emailAddress: emailAddressText.text,
-                    image: newUserImage,
-                  )));
+      withImageMapData = {"fullName": fullNameText.text, "address": addressText.text, "emailAddress": emailAddressText.text, "image": newUserImage};
+
+      Navigator.of(context).pop(withImageMapData);
+
     } else {
       Fluttertoast.showToast(
           msg: "Please try again.", toastLength: Toast.LENGTH_SHORT);
@@ -124,6 +124,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
   }
 
   void imageNotIncluded() async {
+    Map noImageMapData;
     final uri = Uri.parse(
         "https://instrubuy.000webhostapp.com/instrubuy_profile/noImageProfileUpdate.php");
     var request = http.MultipartRequest('POST', uri);
@@ -144,15 +145,9 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
       preferences.setString('address', addressText.text);
       preferences.setString('email_address', emailAddressText.text);
 
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => Profile(
-                    fullName: fullNameText.text,
-                    address: addressText.text,
-                    emailAddress: emailAddressText.text,
-                    image: yourImage,
-                  )));
+      noImageMapData = {"fullName": fullNameText.text, "address": addressText.text, "emailAddress": emailAddressText.text, "image": null};
+
+      Navigator.pop(context, noImageMapData);
     } else {
       Fluttertoast.showToast(
           msg: "Please try again.", toastLength: Toast.LENGTH_SHORT);
@@ -180,13 +175,22 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
             color: kPrimaryColor,
           ),
           onPressed: () {
-            Navigator.pop(context);
+//            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Profile(
+//              image: yourImage,
+//              fullName: yourFullName,
+//              address: yourAddress,
+//              emailAddress: yourEmailAddress,
+//            )));
+            Navigator.of(context).pop();
           },
         ),
       ),
       body: Container(
         child: Padding(
-          padding: EdgeInsets.only(left: defaultSize * 1.8, top: defaultSize * 2.5, right: defaultSize * 1.8),
+          padding: EdgeInsets.only(
+              left: defaultSize * 1.8,
+              top: defaultSize * 2.5,
+              right: defaultSize * 1.8),
           child: GestureDetector(
             onTap: () {
               FocusScope.of(context).unfocus();
@@ -286,7 +290,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                           padding: EdgeInsets.symmetric(horizontal: 50.0),
                           shape: RoundedRectangleBorder(
                             borderRadius:
-                            BorderRadius.circular(defaultSize * 2),
+                                BorderRadius.circular(defaultSize * 2),
                           )),
                       onPressed: () {
                         setState(() {

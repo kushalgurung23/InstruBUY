@@ -31,24 +31,12 @@ class _InitialScreenState extends State<InitialScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getCustomerAccountStatus();
-    fetchAllProduct();
-    // We fetch our product's data as soon as app is opened.
+    initial();
   }
 
-  void getCustomerAccountStatus() async {
-    preferences = await SharedPreferences.getInstance();
-    customer_id = preferences.getString('customer_id');
-    if(customer_id != null) {
-      var url =
-          'https://instrubuy.000webhostapp.com/instrubuy_logindetails/accountCheck.php';
-      var data = {
-        "customer_id": customer_id,
-      };
-      var response = await http.post(url, body: data);
-      accountStatus = await (json.decode(response.body)[0]["status"]).toString();
-    }
-    checkAllStatus();
+  void initial() async {
+    await fetchAllProduct();
+    await getCustomerAccountStatus();
   }
 
   void fetchAllProduct() async {
@@ -58,8 +46,25 @@ class _InitialScreenState extends State<InitialScreen> {
     await widget.parentModel.fetchOtherProducts();
   }
 
+  void getCustomerAccountStatus() async {
+    preferences = await SharedPreferences.getInstance();
+    customer_id = preferences.getString('customer_id');
+    if (customer_id != null) {
+      var url =
+          'https://instrubuy.000webhostapp.com/instrubuy_logindetails/accountCheck.php';
+      var data = {
+        "customer_id": customer_id,
+      };
+      var response = await http.post(url, body: data);
+      accountStatus =
+          await (json.decode(response.body)[0]["status"]).toString();
+    }
+    checkAllStatus();
+  }
+
   void checkAllStatus() async {
     preferences = await SharedPreferences.getInstance();
+
     // Splash screen will only be displayed when isAppUsed value == false.
     // So, when we go to login page, it's value will be true,
     // because splash screen will only be displayed once when it is installed for the first time.
@@ -72,7 +77,7 @@ class _InitialScreenState extends State<InitialScreen> {
 
     // If app is launched for the first time
     if (isAppUsed == false) {
-      Navigator.pushNamed(context, SplashScreen.id);
+      Navigator.pushReplacementNamed(context, SplashScreen.id);
     }
     // If app is already launched before
     else {
@@ -84,16 +89,16 @@ class _InitialScreenState extends State<InitialScreen> {
               context, MaterialPageRoute(builder: (context) => HomeScreen()));
         }
         // If user's account has been deactivated by admin
-        else if (accountStatus == "Inactive"){
+        else if (accountStatus == "Inactive") {
           setLoginPreference();
-          Navigator.pushNamed(context, LoginScreen.id);
+          Navigator.pushReplacementNamed(context, LoginScreen.id);
           Fluttertoast.showToast(
               msg: "Your account has been deactivated.",
               toastLength: Toast.LENGTH_SHORT);
-        }
-        else {
+        } else {
           Fluttertoast.showToast(
-              msg: "An error has been shown regarding your account status. Please contact the office.",
+              msg:
+                  "An error has been shown regarding your account status. Please contact the office.",
               toastLength: Toast.LENGTH_LONG);
         }
       }
@@ -104,7 +109,7 @@ class _InitialScreenState extends State<InitialScreen> {
       }
       // If neither user nor admin is logged in (i.e. both isNewUser and isNewAdmin == true)
       else {
-        Navigator.pushNamed(context, LoginScreen.id);
+        Navigator.pushReplacementNamed(context, LoginScreen.id);
       }
     }
   }
@@ -127,7 +132,7 @@ class _InitialScreenState extends State<InitialScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Timer(Duration(seconds: 3), () {});
+    Timer(Duration(seconds: 4), () {});
     SizeConfig().init(context);
     return Scaffold(
       body: SafeArea(

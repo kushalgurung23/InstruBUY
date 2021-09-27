@@ -49,7 +49,7 @@ class _AdminListState extends State<AdminList> {
     });
     if (jsonDecode(res.body) == 'true') {
       Fluttertoast.showToast(
-          msg: "Deleted successfully.", toastLength: Toast.LENGTH_SHORT);
+          msg: "Admin deleted permanently.", toastLength: Toast.LENGTH_SHORT);
     } else if (jsonDecode(res.body) == 'false') {
       Fluttertoast.showToast(
           msg: "Sorry, admin's account couldn't be deleted.",
@@ -58,7 +58,9 @@ class _AdminListState extends State<AdminList> {
       Fluttertoast.showToast(
           msg: "Please try again later.", toastLength: Toast.LENGTH_SHORT);
     }
-    setState(() {});
+    setState(() {
+      Navigator.pop(context);
+    });
   }
 
   @override
@@ -84,7 +86,8 @@ class _AdminListState extends State<AdminList> {
               child: RoundedIconButton(
                 iconData: Icons.arrow_back_ios,
                 press: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => AdminPanel()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AdminPanel()));
                 },
               ),
             ),
@@ -108,7 +111,8 @@ class _AdminListState extends State<AdminList> {
                           padding: EdgeInsets.symmetric(
                               vertical: SizeConfig.defaultSize),
                           decoration: BoxDecoration(
-                              gradient: LinearGradient(colors: [Colors.deepPurple, Colors.blue]),
+                              gradient: LinearGradient(
+                                  colors: [Colors.deepPurple, Colors.blue]),
                               borderRadius: BorderRadius.circular(10)),
                           child: ListTile(
                             title: Column(
@@ -147,12 +151,10 @@ class _AdminListState extends State<AdminList> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) =>
-                                                UpdateAdmin(
+                                            builder: (context) => UpdateAdmin(
                                                   list: list,
                                                   index: index,
                                                 )));
-                                    debugPrint('Edit button clicked');
                                   },
                                 ),
                                 Padding(
@@ -167,11 +169,46 @@ class _AdminListState extends State<AdminList> {
                                           list[index]['admin_id']) {
                                         Fluttertoast.showToast(
                                             msg:
-                                            "You cannot delete your own account.",
+                                                "You cannot delete your own account.",
                                             toastLength: Toast.LENGTH_SHORT);
                                       } else {
-                                        deleteAdmin(
-                                            admin_id: list[index]['admin_id']);
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              content: Text(
+                                                  "Are you sure you want to delete this admin permanently?"),
+                                              actions: [
+                                                TextButton(
+                                                    child: Text(
+                                                      "No",
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w600),
+                                                    ),
+                                                    onPressed: () => {
+                                                          Navigator.pop(context)
+                                                        }),
+                                                TextButton(
+                                                  child: Text(
+                                                    "Yes",
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w600),
+                                                  ),
+                                                  onPressed: () => deleteAdmin(
+                                                      admin_id: list[index]
+                                                          ['admin_id']),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                          barrierDismissible: false,
+                                        );
                                       }
                                     },
                                   ),

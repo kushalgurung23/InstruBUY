@@ -95,7 +95,7 @@ class _AdminInactiveOrderDetailsState extends State<AdminInactiveOrderDetails> {
 
                             return "Payment status: Unpaid";
                           })(), style: TextStyle(color: Colors.white)),
-                          Text("Order status: " + list[index]['status'], style: TextStyle(color: Colors.white)),
+                          Text("Product delivery: " + list[index]['status'], style: TextStyle(color: Colors.white)),
                         ],
                       ),
                     ),

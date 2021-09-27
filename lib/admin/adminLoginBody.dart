@@ -77,7 +77,7 @@ class _AdminLoginBodyState extends State<AdminLoginBody> {
             msg:
                 "Welcome ${(jsonDecode(res.body)["result"][0]["position"]).toString()}",
             toastLength: Toast.LENGTH_SHORT);
-        Navigator.push(
+        Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => AdminPanel()));
       }
     }
@@ -191,7 +191,7 @@ class _AdminLoginBodyState extends State<AdminLoginBody> {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, LoginScreen.id);
+                Navigator.pushReplacementNamed(context, LoginScreen.id);
               },
               child: Text(
                 "Customer",
