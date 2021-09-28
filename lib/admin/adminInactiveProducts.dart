@@ -176,7 +176,7 @@ class _AdminInactiveProductsState extends State<AdminInactiveProducts> {
                                     color: Colors.white,
                                   ),
                                   onTap: () {
-                                    Navigator.push(
+                                    Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>

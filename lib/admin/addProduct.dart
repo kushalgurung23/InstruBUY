@@ -56,7 +56,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
         Fluttertoast.showToast(
             msg: "Product added successfully.",
             toastLength: Toast.LENGTH_SHORT);
-        Navigator.pushNamed(context, AdminAllProducts.id);
+        Navigator.pushReplacementNamed(context, AdminAllProducts.id);
       } else {
         Fluttertoast.showToast(
             msg: "Please try again.", toastLength: Toast.LENGTH_SHORT);

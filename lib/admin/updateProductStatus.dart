@@ -41,7 +41,7 @@ class _UpdateProductStatusState extends State<UpdateProductStatus> {
       Fluttertoast.showToast(
           msg: "Product's status has been updated successfully.",
           toastLength: Toast.LENGTH_SHORT);
-      Navigator.push(context, MaterialPageRoute(builder: (context) => AdminInactiveProducts()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AdminInactiveProducts()));
     }
     else {
       Fluttertoast.showToast(

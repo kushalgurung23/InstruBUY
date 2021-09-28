@@ -56,6 +56,8 @@ class _UpdateProductState extends State<UpdateProduct> {
   }
 
   updateData() async {
+    Map withImageMapData;
+
     // It includes new image of the product
     if (_image != null) {
       final uri = Uri.parse(
@@ -77,7 +79,16 @@ class _UpdateProductState extends State<UpdateProduct> {
         Fluttertoast.showToast(
             msg: "Product updated successfully.",
             toastLength: Toast.LENGTH_SHORT);
-        Navigator.pushNamed(context, AdminAllProducts.id);
+
+        withImageMapData = {
+          "title": titleText.text,
+          "price": priceText.text,
+          "product_quantity": product_quantityText.text,
+          "category_id": selectedValue.toString(),
+          "image": _image.path.split('/').last,
+        };
+
+        Navigator.pop(context, withImageMapData);
       } else {
         Fluttertoast.showToast(
             msg: "Please try again.", toastLength: Toast.LENGTH_SHORT);
@@ -85,6 +96,8 @@ class _UpdateProductState extends State<UpdateProduct> {
     }
     // If no new image of product is selected by admin
     else {
+      Map<String, String> noImageMapData;
+
       final uri = Uri.parse(
           "https://instrubuy.000webhostapp.com/instrubuy_adminPanel/noImageUpdateProducts.php");
       var request = http.MultipartRequest('POST', uri);
@@ -102,7 +115,16 @@ class _UpdateProductState extends State<UpdateProduct> {
         Fluttertoast.showToast(
             msg: "Product updated successfully.",
             toastLength: Toast.LENGTH_SHORT);
-        Navigator.pushNamed(context, AdminAllProducts.id);
+
+        noImageMapData = {
+          "title": titleText.text,
+          "price": priceText.text,
+          "product_quantity": product_quantityText.text,
+          "category_id": selectedValue.toString(),
+          "image": null,
+        };
+
+        Navigator.pop(context, noImageMapData);
       } else {
         Fluttertoast.showToast(
             msg: "Please try again.", toastLength: Toast.LENGTH_SHORT);
@@ -114,9 +136,11 @@ class _UpdateProductState extends State<UpdateProduct> {
     var pickedImage = await picker.getImage(source: ImageSource.gallery);
     setState(() {
       _image = File(pickedImage.path);
-      print("Value of selected new image: " + _image.toString());
+      print("Value of selected new image: " + _image.path.split('/').last);
     });
   }
+
+//  /data/user/0/com.instrubuy/cache/image_picker7147554862521539235.jpg
 
   String selectedValue;
   List listItem = [

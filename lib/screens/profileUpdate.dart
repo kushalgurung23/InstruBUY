@@ -175,12 +175,6 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
             color: kPrimaryColor,
           ),
           onPressed: () {
-//            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Profile(
-//              image: yourImage,
-//              fullName: yourFullName,
-//              address: yourAddress,
-//              emailAddress: yourEmailAddress,
-//            )));
             Navigator.of(context).pop();
           },
         ),

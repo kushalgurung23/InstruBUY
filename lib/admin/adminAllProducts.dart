@@ -21,6 +21,7 @@ class AdminAllProducts extends StatefulWidget {
 class _AdminAllProductsState extends State<AdminAllProducts> {
   SharedPreferences preferences;
   String productImage;
+  Map mapData;
 
   @override
   void initState() {
@@ -52,23 +53,44 @@ class _AdminAllProductsState extends State<AdminAllProducts> {
     });
     if (jsonDecode(res.body) == "true") {
       Fluttertoast.showToast(
-          msg:
-          "Product has been deleted temporarily.",
+          msg: "Product has been deleted temporarily.",
           toastLength: Toast.LENGTH_LONG);
-    } else if (jsonDecode(res.body) ==
-        "false") {
+    } else if (jsonDecode(res.body) == "false") {
       Fluttertoast.showToast(
-          msg:
-          "Sorry, product could not be deleted.",
+          msg: "Sorry, product could not be deleted.",
           toastLength: Toast.LENGTH_LONG);
     } else {
       Fluttertoast.showToast(
-          msg:
-          "Error, please try again later",
+          msg: "Error, please try again later",
           toastLength: Toast.LENGTH_SHORT);
     }
     setState(() {
       Navigator.pop(context);
+    });
+  }
+
+  void noImageProductUpdate(
+      {String title, String price, String productQuantity, String categoryId}) {
+    setState(() {
+      title = mapData["title"];
+      price = mapData["price"];
+      productQuantity = mapData["product_quantity"];
+      categoryId = mapData["category_id"];
+    });
+  }
+
+  void withImageProductUpdate(
+      {String title,
+      String price,
+      String productQuantity,
+      String categoryId,
+      String image}) {
+    setState(() {
+      title = mapData["title"];
+      price = mapData["price"];
+      productQuantity = mapData["product_quantity"];
+      categoryId = mapData["category_id"];
+      image = mapData["image"];
     });
   }
 
@@ -95,8 +117,7 @@ class _AdminAllProductsState extends State<AdminAllProducts> {
               child: RoundedIconButton(
                 iconData: Icons.arrow_back_ios,
                 press: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => ProductOptionScreen()));
+                  Navigator.of(context).pop();
                 },
               ),
             ),
@@ -118,7 +139,8 @@ class _AdminAllProductsState extends State<AdminAllProducts> {
                             horizontal: SizeConfig.defaultSize * 2),
                         child: Container(
                           decoration: BoxDecoration(
-                            gradient: LinearGradient(colors: [Colors.deepPurple, Colors.blue]),
+                            gradient: LinearGradient(
+                                colors: [Colors.deepPurple, Colors.blue]),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: ListTile(
@@ -168,15 +190,33 @@ class _AdminAllProductsState extends State<AdminAllProducts> {
                                     Icons.edit,
                                     color: Colors.white,
                                   ),
-                                  onTap: () {
-                                    Navigator.push(
+                                  onTap: () async {
+                                    mapData = await Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) =>
-                                                UpdateProduct(
+                                            builder: (context) => UpdateProduct(
                                                   list: list,
                                                   index: index,
                                                 )));
+
+                                    if (mapData["image"] == null) {
+                                      noImageProductUpdate(
+                                          title: list[index]['title'],
+                                          price: list[index]['price'],
+                                          productQuantity: list[index]
+                                              ['product_quantity'],
+                                          categoryId: list[index]
+                                              ['category_id']);
+                                    } else {
+                                      withImageProductUpdate(
+                                        title: list[index]['title'],
+                                        price: list[index]['price'],
+                                        productQuantity: list[index]
+                                            ['product_quantity'],
+                                        categoryId: list[index]['category_id'],
+                                        image: list[index]['image_location'],
+                                      );
+                                    }
                                   },
                                 ),
                                 Padding(
@@ -195,20 +235,35 @@ class _AdminAllProductsState extends State<AdminAllProducts> {
                                                 "Are you sure you want to delete this product temporarily?"),
                                             actions: [
                                               TextButton(
-                                                  child: Text("No", style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w600),),
+                                                  child: Text(
+                                                    "No",
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w600),
+                                                  ),
                                                   onPressed: () =>
-                                                  {Navigator.pop(context)}),
+                                                      {Navigator.pop(context)}),
                                               TextButton(
-                                                child: Text("Yes", style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w600),),
-                                                onPressed: () =>
-                                                    deleteActiveProducts(product_id: list[index]['product_id'])
-                                              ),
+                                                  child: Text(
+                                                    "Yes",
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w600),
+                                                  ),
+                                                  onPressed: () =>
+                                                      deleteActiveProducts(
+                                                          product_id: list[
+                                                                  index]
+                                                              ['product_id'])),
                                             ],
                                           );
                                         },
                                         barrierDismissible: false,
                                       );
-
                                     },
                                   ),
                                 ),

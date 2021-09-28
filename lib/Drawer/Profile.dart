@@ -1,16 +1,10 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:instrubuy/Drawer/Home.dart';
-import 'package:instrubuy/Drawer/Sidebar.dart';
-import 'package:instrubuy/screens/cart_screen.dart';
-import 'package:instrubuy/screens/home_screen.dart';
 import 'package:instrubuy/screens/profileUpdate.dart';
 import 'package:instrubuy/smallComponents/ProfileInputTextField.dart';
 import 'package:instrubuy/smallComponents/constants.dart';
 import 'package:instrubuy/smallComponents/sizeConfiguration.dart';
-import 'package:kf_drawer/kf_drawer.dart';
 
 class Profile extends StatefulWidget {
   static const String id = 'profile.dart';
