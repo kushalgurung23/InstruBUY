@@ -81,7 +81,6 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
     setState(() {
       _image = File(pickedImage.path);
       newUserImage = _image.path.split('/').last;
-      //debugPrint("New user image: "+ newUserImage.toString());
     });
   }
 

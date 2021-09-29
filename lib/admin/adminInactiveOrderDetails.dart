@@ -33,8 +33,7 @@ class _AdminInactiveOrderDetailsState extends State<AdminInactiveOrderDetails> {
         appBar: CustomAppBar(
           titleName: "Inactive Order Details",
           onPress: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => OrderStatus()));
+            Navigator.pop(context);
           },
         ),
         body: FutureBuilder(
@@ -59,8 +58,8 @@ class _AdminInactiveOrderDetailsState extends State<AdminInactiveOrderDetails> {
                     child: ListTile(
                       leading: GestureDetector(
                         child: Icon(Icons.edit, color: Colors.white,),
-                        onTap: () {
-                          Navigator.push(
+                        onTap: () async {
+                          await Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
@@ -68,6 +67,9 @@ class _AdminInactiveOrderDetailsState extends State<AdminInactiveOrderDetails> {
                                         order_id: list[index]['order_id'],
                                         finalOrder_status: list[index]['final_status'],
                                       )));
+                          setState(() {
+                            build(context);
+                          });
                         },
                       ),
                       title: Text(

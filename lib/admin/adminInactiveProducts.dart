@@ -20,6 +20,7 @@ class AdminInactiveProducts extends StatefulWidget {
 class _AdminInactiveProductsState extends State<AdminInactiveProducts> {
   SharedPreferences preferences;
   String productImage;
+  List mapData;
 
   @override
   void initState() {
@@ -77,6 +78,12 @@ class _AdminInactiveProductsState extends State<AdminInactiveProducts> {
     });
   }
 
+  void updateInactiveProduct() {
+    setState(() {
+
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -100,10 +107,11 @@ class _AdminInactiveProductsState extends State<AdminInactiveProducts> {
               child: RoundedIconButton(
                 iconData: Icons.arrow_back_ios,
                 press: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ProductOptionScreen()));
+                  Navigator.pop(context);
+//                  Navigator.push(
+//                      context,
+//                      MaterialPageRoute(
+//                          builder: (context) => ProductOptionScreen()));
                 },
               ),
             ),
@@ -118,7 +126,7 @@ class _AdminInactiveProductsState extends State<AdminInactiveProducts> {
                 ? ListView.builder(
                     itemCount: snapshot.data.length,
                     itemBuilder: (context, index) {
-                      List list = snapshot.data;
+                      List list = mapData ?? snapshot.data;
                       return Padding(
                         padding: EdgeInsets.symmetric(
                             vertical: SizeConfig.defaultSize,
@@ -175,8 +183,8 @@ class _AdminInactiveProductsState extends State<AdminInactiveProducts> {
                                     Icons.edit,
                                     color: Colors.white,
                                   ),
-                                  onTap: () {
-                                    Navigator.pushReplacement(
+                                  onTap: () async {
+                                    String status = await Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
@@ -186,6 +194,11 @@ class _AdminInactiveProductsState extends State<AdminInactiveProducts> {
                                                   product_status: list[index]
                                                       ['status'],
                                                 )));
+                                    if(status == "ok") {
+                                      setState(() {
+                                        build(context);
+                                      });
+                                    }
                                   },
                                 ),
                                 Padding(

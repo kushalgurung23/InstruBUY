@@ -298,11 +298,14 @@ class _AdminPanelState extends State<AdminPanel> {
               height: SizeConfig.defaultSize * 1,
             ),
             GestureDetector(
-              onTap: () {
-                Navigator.push(
+              onTap: () async {
+                 await Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => ProductOptionScreen()));
+                setState(() {
+                  build(context);
+                });
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -328,10 +331,12 @@ class _AdminPanelState extends State<AdminPanel> {
               ),
             ),
             GestureDetector(
-              onTap: () {
-                Navigator.push(context,
+              onTap: () async {
+                await Navigator.push(context,
                     MaterialPageRoute(builder: (context) => OrderStatus()));
-                //Navigator.pushNamed(context, AdminOrderDetails.id);
+                setState(() {
+                  build(context);
+                });
               },
               child: Container(
                 decoration: BoxDecoration(

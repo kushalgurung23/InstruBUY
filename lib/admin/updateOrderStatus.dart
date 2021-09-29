@@ -32,6 +32,8 @@ class _UpdateOrderStatusState extends State<UpdateOrderStatus> {
   ];
 
   updateOrderStatus() async {
+    Map mapData;
+
     final uri = Uri.parse(
         "https://instrubuy.000webhostapp.com/instrubuy_adminPanel/updateOrderStatus.php");
     var request = http.MultipartRequest('POST', uri);
@@ -47,7 +49,10 @@ class _UpdateOrderStatusState extends State<UpdateOrderStatus> {
       Fluttertoast.showToast(
           msg: "Order detail is updated successfully.",
           toastLength: Toast.LENGTH_SHORT);
-      Navigator.pushNamed(context, AdminOrderDetails.id);
+
+      mapData = {"is_paid": selectedPaymentStatus == 'Paid' ? '1' : '0', "order_status": selectedOrderStatus};
+
+      Navigator.pop(context, mapData);
     } else {
       Fluttertoast.showToast(
           msg: "Please try again.", toastLength: Toast.LENGTH_SHORT);

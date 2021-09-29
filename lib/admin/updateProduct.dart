@@ -121,7 +121,7 @@ class _UpdateProductState extends State<UpdateProduct> {
           "price": priceText.text,
           "product_quantity": product_quantityText.text,
           "category_id": selectedValue.toString(),
-          "image": null,
+          "image": "noImage",
         };
 
         Navigator.pop(context, noImageMapData);

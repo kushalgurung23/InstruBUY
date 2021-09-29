@@ -37,10 +37,10 @@ class _UpdateFinalOrderStatusState extends State<UpdateFinalOrderStatus> {
     var response = await request.send();
 
     if (response.statusCode == 200) {
+      Navigator.pop(context);
       Fluttertoast.showToast(
           msg: "Final order status has been updated successfully.",
-          toastLength: Toast.LENGTH_SHORT);
-      Navigator.push(context, MaterialPageRoute(builder: (context) => AdminInactiveOrderDetails()));
+          toastLength: Toast.LENGTH_LONG);
     }
     else {
       Fluttertoast.showToast(
@@ -122,7 +122,14 @@ class _UpdateFinalOrderStatusState extends State<UpdateFinalOrderStatus> {
                       buttonName: "Update Status",
                       onPress: () {
                         setState(() {
-                          updateFinalOrderStatus();
+                          if(selectedOrderStatus == "Inactive") {
+                            Fluttertoast.showToast(
+                                msg: "Final order status is inactive already.",
+                                toastLength: Toast.LENGTH_SHORT);
+                          }
+                          else {
+                            updateFinalOrderStatus();
+                          }
                         });
                       },
                     ),

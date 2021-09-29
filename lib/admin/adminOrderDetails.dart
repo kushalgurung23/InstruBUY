@@ -19,6 +19,8 @@ class AdminOrderDetails extends StatefulWidget {
 
 class _AdminOrderDetailsState extends State<AdminOrderDetails> {
 
+  Map mapData;
+
   void deleteOrder({String order_id}) async {
     var url =
         "https://instrubuy.000webhostapp.com/instrubuy_adminPanel/deleteOrder.php";
@@ -48,6 +50,13 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
     return json.decode(response.body);
   }
 
+  updateOrderStatus({String paymentStatus, String orderStatus}) {
+    setState(() {
+      paymentStatus = mapData["is_paid"];
+      orderStatus = mapData["order_status"];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -55,8 +64,7 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
         appBar: CustomAppBar(
           titleName: "Active Order Details",
           onPress: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => OrderStatus()));
+            Navigator.pop(context);
           },
         ),
         body: FutureBuilder(
@@ -81,8 +89,8 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
                           child: ListTile(
                             leading: GestureDetector(
                               child: Icon(Icons.edit, color: Colors.white,),
-                              onTap: () {
-                                Navigator.push(
+                              onTap: () async {
+                                mapData = await Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => UpdateOrderStatus(
@@ -91,7 +99,13 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
                                                   ['is_paid'],
                                               orderStatus: list[index]['status'],
                                             )));
-                                debugPrint('Edit button clicked');
+                                if(mapData == null) {
+                                  return;
+                                }
+                                else {
+                                  updateOrderStatus(paymentStatus: list[index]
+                                  ['is_paid'], orderStatus: list[index]['status']);
+                                }
                               },
                             ),
                             title: Text(

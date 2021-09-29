@@ -28,8 +28,7 @@ class _OrderStatusState extends State<OrderStatus> {
       appBar: CustomAppBar(
         titleName: "Order Details",
         onPress: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => AdminPanel()));
+          Navigator.pop(context);
         },
       ),
       body: SafeArea(

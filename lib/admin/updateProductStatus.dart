@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:instrubuy/admin/adminInactiveOrderDetails.dart';
@@ -41,7 +43,10 @@ class _UpdateProductStatusState extends State<UpdateProductStatus> {
       Fluttertoast.showToast(
           msg: "Product's status has been updated successfully.",
           toastLength: Toast.LENGTH_SHORT);
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AdminInactiveProducts()));
+
+      String status = "ok";
+      await Navigator.pop(context, status);
+      //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AdminInactiveProducts()));
     }
     else {
       Fluttertoast.showToast(
@@ -123,7 +128,14 @@ class _UpdateProductStatusState extends State<UpdateProductStatus> {
                       buttonName: "Update Status",
                       onPress: () {
                         setState(() {
-                          updateProductStatus();
+                          if(selectedProductStatus == 'Inactive') {
+                            Fluttertoast.showToast(
+                                msg: "Product's status is inactive already.",
+                                toastLength: Toast.LENGTH_SHORT);
+                          }
+                          else {
+                            updateProductStatus();
+                          }
                         });
                       },
                     ),

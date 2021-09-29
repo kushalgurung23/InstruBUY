@@ -90,7 +90,7 @@ class _AdminAllProductsState extends State<AdminAllProducts> {
       price = mapData["price"];
       productQuantity = mapData["product_quantity"];
       categoryId = mapData["category_id"];
-      image = mapData["image"];
+      image = mapData["image"] ?? image;
     });
   }
 
@@ -199,7 +199,9 @@ class _AdminAllProductsState extends State<AdminAllProducts> {
                                                   index: index,
                                                 )));
 
-                                    if (mapData["image"] == null) {
+                                    if (mapData == null) {
+                                      return;
+                                    } else if (mapData["image"] == "noImage") {
                                       noImageProductUpdate(
                                           title: list[index]['title'],
                                           price: list[index]['price'],

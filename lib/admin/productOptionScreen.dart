@@ -27,8 +27,7 @@ class _ProductOptionScreenState extends State<ProductOptionScreen> {
       appBar: CustomAppBar(
         titleName: "Product Details",
         onPress: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => AdminPanel()));
+          Navigator.pop(context);
         },
       ),
       body: SafeArea(
