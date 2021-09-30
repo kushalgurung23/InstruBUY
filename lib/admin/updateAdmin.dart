@@ -40,23 +40,35 @@ class _UpdateAdminState extends State<UpdateAdmin> {
   }
 
   updateAdmin() async {
-    final uri = Uri.parse(
-        "https://instrubuy.000webhostapp.com/instrubuy_adminPanel/updateAdmin.php");
-    var request = http.MultipartRequest('POST', uri);
-
-    request.fields['admin_id'] = widget.list[widget.index]['admin_id'];
-    request.fields['email_address'] = emailAddressController.text;
-    request.fields['position'] = positionController.text;
-
-    var response = await request.send();
-
-    if (response.statusCode == 200) {
-      Fluttertoast.showToast(
-          msg: "Updated successfully.", toastLength: Toast.LENGTH_SHORT);
-      Navigator.push(context, MaterialPageRoute(builder: (context) => AdminList()));
+    if (widget.list[widget.index]['email_address'] ==
+            emailAddressController.text &&
+        widget.list[widget.index]['position'] == positionController.text) {
+      Navigator.pop(context);
     } else {
-      Fluttertoast.showToast(
-          msg: "Please try again.", toastLength: Toast.LENGTH_SHORT);
+      Map mapData;
+
+      final uri = Uri.parse(
+          "https://instrubuy.000webhostapp.com/instrubuy_adminPanel/updateAdmin.php");
+      var request = http.MultipartRequest('POST', uri);
+
+      request.fields['admin_id'] = widget.list[widget.index]['admin_id'];
+      request.fields['email_address'] = emailAddressController.text;
+      request.fields['position'] = positionController.text;
+
+      var response = await request.send();
+
+      if (response.statusCode == 200) {
+        mapData = {
+          "email_address": emailAddressController.text,
+          "position": positionController.text
+        };
+        Navigator.pop(context, mapData);
+        Fluttertoast.showToast(
+            msg: "Updated successfully.", toastLength: Toast.LENGTH_SHORT);
+      } else {
+        Fluttertoast.showToast(
+            msg: "Please try again.", toastLength: Toast.LENGTH_SHORT);
+      }
     }
   }
 

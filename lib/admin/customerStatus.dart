@@ -28,7 +28,7 @@ class _CustomerStatusState extends State<CustomerStatus> {
       appBar: CustomAppBar(
         titleName: "Customer Details",
         onPress: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => AdminPanel()));
+          Navigator.pop(context);
         },
       ),
       body: SafeArea(

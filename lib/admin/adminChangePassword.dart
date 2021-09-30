@@ -53,10 +53,10 @@ class _AdminChangePasswordState extends State<AdminChangePassword> {
       Fluttertoast.showToast(
           msg: "Please try again later.", toastLength: Toast.LENGTH_SHORT);
     } else {
+      Navigator.pop(context);
       Fluttertoast.showToast(
           msg: "Password changed successfully.",
           toastLength: Toast.LENGTH_SHORT);
-      Navigator.pop(context);
       preferences.setString(
           'adminPassword',
           (jsonDecode(response.body)["result"][0]["encrypted_password"])

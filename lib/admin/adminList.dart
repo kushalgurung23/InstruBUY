@@ -19,6 +19,7 @@ class AdminList extends StatefulWidget {
 class _AdminListState extends State<AdminList> {
   SharedPreferences sharedPreferences;
   String current_adminId;
+  Map mapData;
 
   void initial() async {
     sharedPreferences = await SharedPreferences.getInstance();
@@ -63,6 +64,13 @@ class _AdminListState extends State<AdminList> {
     });
   }
 
+  void updateAdmin({String emailAddress, String position}) {
+    setState(() {
+      emailAddress = mapData["email_address"];
+      position = mapData["position"];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -86,8 +94,7 @@ class _AdminListState extends State<AdminList> {
               child: RoundedIconButton(
                 iconData: Icons.arrow_back_ios,
                 press: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AdminPanel()));
+                  Navigator.pop(context);
                 },
               ),
             ),
@@ -147,14 +154,22 @@ class _AdminListState extends State<AdminList> {
                                     Icons.edit,
                                     color: Colors.white,
                                   ),
-                                  onTap: () {
-                                    Navigator.push(
+                                  onTap: () async {
+                                    mapData = await Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) => UpdateAdmin(
                                                   list: list,
                                                   index: index,
                                                 )));
+                                    if (mapData == null) {
+                                      return;
+                                    } else {
+                                      updateAdmin(
+                                          emailAddress: list[index]
+                                              ['email_address'],
+                                          position: list[index]['position']);
+                                    }
                                   },
                                 ),
                                 Padding(

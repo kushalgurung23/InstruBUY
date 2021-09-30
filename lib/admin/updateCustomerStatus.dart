@@ -43,10 +43,10 @@ class _UpdateCustomerStatusState extends State<UpdateCustomerStatus> {
           msg: "Another active account with this email address is present already.", toastLength: Toast.LENGTH_LONG);
     }
     else if(jsonDecode(response.body) == "true") {
+      Navigator.pop(context);
       Fluttertoast.showToast(
           msg: "Customer status has been updated successfully.",
-          toastLength: Toast.LENGTH_SHORT);
-      Navigator.push(context, MaterialPageRoute(builder: (context) => AdminInactiveCustomerDetails()));
+          toastLength: Toast.LENGTH_LONG);
     }
     else {
       Fluttertoast.showToast(
@@ -131,9 +131,8 @@ class _UpdateCustomerStatusState extends State<UpdateCustomerStatus> {
                         setState(() {
                           if(selectedCustomerStatus == 'Inactive') {
                             Fluttertoast.showToast(
-                                msg: "Customer status set to inactive.",
+                                msg: "Customer status is inactive already.",
                                 toastLength: Toast.LENGTH_SHORT);
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => AdminInactiveCustomerDetails()));
                           }
                           else if (selectedCustomerStatus == 'Active') {
                             updateCustomerStatus();

@@ -76,10 +76,7 @@ class _AdminInactiveCustomerDetailsState
               child: RoundedIconButton(
                 iconData: Icons.arrow_back_ios,
                 press: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => CustomerStatus()));
+                  Navigator.pop(context);
                 },
               ),
             ),
@@ -146,8 +143,8 @@ class _AdminInactiveCustomerDetailsState
                                     Icons.edit,
                                     color: Colors.white,
                                   ),
-                                  onTap: () {
-                                    Navigator.push(
+                                  onTap: () async {
+                                    await Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
@@ -159,6 +156,9 @@ class _AdminInactiveCustomerDetailsState
                                                   email_address: list[index]
                                                       ['email_address'],
                                                 )));
+                                    setState(() {
+                                      build(context);
+                                    });
                                   },
                                 ),
                                 Padding(

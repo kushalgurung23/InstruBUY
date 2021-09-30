@@ -44,7 +44,6 @@ class _AdminRegisterState extends State<AdminRegister> {
       }
       else if (jsonDecode(response.body) == "true") {
         Fluttertoast.showToast(msg: "Account registered successfully.", toastLength: Toast.LENGTH_SHORT);
-        //Navigator.push(context, MaterialPageRoute(builder: (context) => AdminPanel()));
         Navigator.pop(context);
       }
     }

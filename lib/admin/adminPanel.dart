@@ -362,9 +362,12 @@ class _AdminPanelState extends State<AdminPanel> {
               ),
             ),
             GestureDetector(
-              onTap: () {
-                Navigator.push(context,
+              onTap: () async {
+                await Navigator.push(context,
                     MaterialPageRoute(builder: (context) => CustomerStatus()));
+                setState(() {
+                  build(context);
+                });
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -423,7 +426,6 @@ class _AdminPanelState extends State<AdminPanel> {
               onTap: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => AdminRegister()));
-                //Navigator.pushNamed(context, AdminOrderDetails.id);
               },
               child: Container(
                 decoration: BoxDecoration(
