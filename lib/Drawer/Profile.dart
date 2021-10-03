@@ -146,7 +146,10 @@ class _ProfileState extends State<Profile> {
                                     image: widget.image,
                                   )));
 
-                         if(mapData["image"] == null) {
+                         if(mapData == null){
+                           return;
+                         }
+                         else if(mapData["image"] == null) {
                            noImageProfileUpdate(updatedFullName: mapData["fullName"], updatedAddress: mapData["address"], updatedEmailAddress: mapData["emailAddress"]);
                            print("noimageupdate");
                          }

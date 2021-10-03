@@ -77,8 +77,8 @@ class _AdminLoginBodyState extends State<AdminLoginBody> {
             msg:
                 "Welcome ${(jsonDecode(res.body)["result"][0]["position"]).toString()}",
             toastLength: Toast.LENGTH_SHORT);
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => AdminPanel()));
+        Navigator.pushAndRemoveUntil(
+            context, MaterialPageRoute(builder: (context) => AdminPanel()), (route) => false);
       }
     }
   }

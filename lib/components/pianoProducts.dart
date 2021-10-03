@@ -23,7 +23,7 @@ class _PianoProductsState extends State<PianoProducts> {
           padding: EdgeInsets.all(defaultSize * 1.5),
           child: GridView.count(
               mainAxisSpacing:
-              20.0, //distance between each product row to another row
+                  20.0, //distance between each product row to another row
               crossAxisSpacing: 20.0, //distance between two products of a row
               childAspectRatio: 0.6,
               //It does not let the user scroll the products
@@ -35,7 +35,7 @@ class _PianoProductsState extends State<PianoProducts> {
               children: [
                 ...List.generate(
                   parentModel.pianoValue.length,
-                      (index) => AllProducts(
+                  (index) => AllProducts(
                     product: parentModel.pianoProducts[index],
                     press: () => Navigator.pushNamed(context, DetailScreen.id,
                         arguments: ProductDetailsArguments(
@@ -43,11 +43,9 @@ class _PianoProductsState extends State<PianoProducts> {
                         )),
                   ),
                 ),
-              ]
-          ),
+              ]),
         );
       },
     );
   }
-
 }

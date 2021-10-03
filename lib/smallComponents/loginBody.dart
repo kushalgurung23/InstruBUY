@@ -104,7 +104,7 @@ class _LoginBodyState extends State<LoginBody> {
             msg:
                 "Welcome ${(jsonDecode(res.body)["result"][0]["full_name"]).toString()}",
             toastLength: Toast.LENGTH_SHORT);
-        Navigator.pushReplacementNamed(context, HomeScreen.id);
+        Navigator.pushNamedAndRemoveUntil(context, HomeScreen.id, (route) => false);
       }
     }
   }

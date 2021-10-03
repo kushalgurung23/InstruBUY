@@ -32,6 +32,7 @@ class _DetailScreenState extends State<DetailScreen> {
         ModalRoute.of(context).settings.arguments;
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: DetailScreenCustomAppBar(),
         // Product of a particular index will be passed as an argument to DetailScreenBody.
         body: DetailScreenBody(

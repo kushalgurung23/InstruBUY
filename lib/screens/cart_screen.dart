@@ -48,7 +48,7 @@ class _CartScreenState extends State<CartScreen> {
           child: RoundedIconButton(
             iconData: Icons.arrow_back_ios,
             press: () {
-              Navigator.pushNamed(context, HomeScreen.id);
+              Navigator.pop(context);
             },
           ),
         ),

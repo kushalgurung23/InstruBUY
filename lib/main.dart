@@ -1,5 +1,5 @@
 // InstruBUY E-Commerce Application
-// September 30, 2021. 03:06 PM
+// Last updated: October 03, 2021. 07:29 PM
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -64,7 +64,6 @@ class _MyAppState extends State<MyApp> {
         ),
         home: InitialScreen(parentModel: parentModel),
         routes: {
-          InitialScreen.id: (context) => InitialScreen(),
           HomeScreen.id: (context) => HomeScreen(),
           DetailScreen.id: (context) => DetailScreen(),
           SplashScreen.id: (context) => SplashScreen(),

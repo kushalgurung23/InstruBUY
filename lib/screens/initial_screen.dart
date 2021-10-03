@@ -44,6 +44,7 @@ class _InitialScreenState extends State<InitialScreen> {
     await widget.parentModel.fetchPianoProducts();
     await widget.parentModel.fetchUkuleleProducts();
     await widget.parentModel.fetchOtherProducts();
+    await widget.parentModel.searchProducts();
   }
 
   void getCustomerAccountStatus() async {
