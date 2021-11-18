@@ -35,15 +35,6 @@ class _LoginScreenState extends State<LoginScreen> {
       yourAddress = preferences.getString('address');
       yourEmailAddress = preferences.getString('email_address');
       yourPassword = preferences.getString('password');
-
-      print("Here are the details after sign out: ");
-      print("ID: " + yourCustomer_id.toString() ?? "No id");
-      print("Name: "+yourFullName.toString() ?? "no name");
-      print(yourAddress);
-      print(yourEmailAddress);
-      print(yourPassword);
-      print(preferences.getString('image'));
-      print(preferences.getString('status'));
     });
   }
 

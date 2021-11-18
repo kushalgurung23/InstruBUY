@@ -1,5 +1,5 @@
 // InstruBUY E-Commerce Application
-// Last updated: October 03, 2021. 07:29 PM
+// Last updated: November 18, 2021. 11:47 PM
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';

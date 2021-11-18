@@ -50,15 +50,14 @@ class _InitialScreenState extends State<InitialScreen> {
   void getCustomerAccountStatus() async {
     preferences = await SharedPreferences.getInstance();
     customer_id = preferences.getString('customer_id');
+    // If customer id is not null, we will use id to get account status to determine whether it is active or not.
     if (customer_id != null) {
-      var url =
-          'https://instrubuy.000webhostapp.com/instrubuy_logindetails/accountCheck.php';
+      var url = 'https://instrubuy.000webhostapp.com/instrubuy_logindetails/accountCheck.php';
       var data = {
         "customer_id": customer_id,
       };
       var response = await http.post(url, body: data);
-      accountStatus =
-          await (json.decode(response.body)[0]["status"]).toString();
+        accountStatus = ((json.decode(response.body)).length > 0 ? json.decode(response.body)[0]["status"] : '').toString();
     }
     checkAllStatus();
   }
@@ -99,7 +98,7 @@ class _InitialScreenState extends State<InitialScreen> {
         } else {
           Fluttertoast.showToast(
               msg:
-                  "An error has been shown regarding your account status. Please contact the office.",
+                  "An error has been shown regarding your account status. Please try later.",
               toastLength: Toast.LENGTH_LONG);
         }
       }
