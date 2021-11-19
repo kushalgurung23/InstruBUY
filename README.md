@@ -3,4 +3,4 @@
 
 ### It has two user types: Customer and Admin. In order to get access to admin panel in the app, please use 'adminowner01@gmail.com' as email address and 'adminowner01' as password.
 
-#### To test the apk file in android device, please download the InstruBUY.zip file from apk folder.
+#### To test the apk file in android device, please download the InstruBUY.zip file from the apk folder. 
