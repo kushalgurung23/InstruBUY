@@ -96,10 +96,8 @@ class _InitialScreenState extends State<InitialScreen> {
               msg: "Your account has been deactivated.",
               toastLength: Toast.LENGTH_SHORT);
         } else {
-          Fluttertoast.showToast(
-              msg:
-                  "An error has been shown regarding your account status. Please try later.",
-              toastLength: Toast.LENGTH_LONG);
+          setLoginPreference();
+          Navigator.pushReplacementNamed(context, LoginScreen.id);
         }
       }
       // If admin is already logged in
